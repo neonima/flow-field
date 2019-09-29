@@ -3,12 +3,16 @@ class Particle {
     vel: p5.Vector
     acc: p5.Vector
     maxSpeed: number
+    color: p5.Color
+    tempColor: p5.Color
 
     constructor() {
         this.pos = createVector(random(width), random(height))
         this.vel = createVector(0, 0)
         this.acc = createVector(0, 0)
         this.maxSpeed = 0.6
+        this.color = color(0, 0, 0)
+        this.tempColor = color(0, 0, 0)
     }
 
     update() {
@@ -20,12 +24,20 @@ class Particle {
 
     applyForce(force: p5.Vector) {
         this.acc.add(force)
+        this.tempColor = color(0, 255, 0)
+        if (force == null) return
+        this.tempColor = (force.copy().heading() > 0) ? color(240, 3, 252, 125) : color(3, 252, 227, 125)
     }
 
     show() {
-        stroke(0, 5)
+        //stroke(0, 5)
         // strokeWeight(1)
-        point(this.pos.x, this.pos.y)
+        // strokeWeight(1)
+        this.color = lerpColor(this.color, this.tempColor, 0.008)
+        fill(this.color)
+        noStroke()
+        circle(this.pos.x, this.pos.y, 0.5)
+
     }
 
     edges() {
@@ -36,10 +48,10 @@ class Particle {
     }
 
     follow(vectors: p5.Vector[]) {
-        var x = floor(this.pos.x / scl)
-        var y = floor(this.pos.y / scl)
-        var index = x + y * cols
-        var force = vectors[index]
+        let x = floor(this.pos.x / scl)
+        let y = floor(this.pos.y / scl)
+        let index = x + y * cols
+        let force = vectors[index]
         this.applyForce(force)
     }
 }

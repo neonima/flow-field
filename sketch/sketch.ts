@@ -1,37 +1,39 @@
-var inc = 0.3
-var scl = 10
-var rows = 0
-var cols = 0
-var zoff = 0
+let inc = 0.08
+let scl = 50
+let rows = 0
+let cols = 0
+let zoff = 0
+let magn = 0.005
+let zoffStep = 0.0001
 
-var particles: Array<Particle> = []
-var flowField: p5.Vector[]
-var particleSize: number = 50
-
+let particles: Array<Particle> = []
+let flowField: p5.Vector[]
+let particleSize: number = 50
 
 function setup() {
-    createCanvas(750, 750)
-    background(255)
-    cols = floor(width / scl)
-    rows = floor(height / scl)
-    for (var i = 0; i < particleSize; i++) {
+    createCanvas(window.innerWidth, window.innerHeight, P2D)
+    background(0)
+    colorMode(RGB, 255)
+    cols = floor(innerWidth / scl)
+    rows = floor(innerHeight / scl)
+    for (let i = 0; i < particleSize; i++) {
         particles[i] = new Particle()
     }
     flowField = new Array<p5.Vector>(cols * rows)
-
+    let t = createSlider(0.00001, 1, 0.00001, 0.00001)
+    t.position(10, 10)
+    t.style('width', '80px')
 }
 
 function draw() {
-
-
-    var yoff = 0;
-    for (var y = 0; y < rows; y++) {
-        var xoff = 0
-        for (var x = 0; x < cols; x++) {
-            var index = x + y * cols
-            var angle = noise(xoff, yoff, zoff) * TWO_PI
-            var v = p5.Vector.fromAngle(angle)
-            v.setMag(0.005)
+    let yoff = 0;
+    for (let y = 0; y < rows; y++) {
+        let xoff = 0;
+        for (let x = 0; x < cols; x++) {
+            let index = x + y * cols
+            let angle = noise(xoff, yoff, zoff) * TWO_PI
+            let v = p5.Vector.fromAngle(angle)
+            v.setMag(magn)
             flowField[index] = v
             xoff += inc
             push()
@@ -40,15 +42,13 @@ function draw() {
             pop()
         }
         yoff += inc
-        zoff += 0.0001
+        zoff += zoffStep
 
-        for (var i = 0; i < particles.length; i++) {
-
+        for (let i = 0; i < particles.length; i++) {
             particles[i].follow(flowField)
             particles[i].update()
             particles[i].edges()
             particles[i].show()
-
         }
     }
 

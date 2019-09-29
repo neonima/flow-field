@@ -8,6 +8,9 @@
         "rootDir": "./sketch/",
         "sourceMap": true,
         "noImplicitAny": true,
-        "module": "none"
+        "module": "none",
+        "noImplicitReturns": true,
+        "strict": true,
+        "noUnusedLocals": true
     }
 }
