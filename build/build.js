@@ -66,9 +66,6 @@ function setup() {
         particles[i] = new Particle();
     }
     flowField = new Array(cols * rows);
-    var t = createSlider(0.00001, 1, 0.00001, 0.00001);
-    t.position(10, 10);
-    t.style('width', '80px');
 }
 function draw() {
     var yoff = 0;
