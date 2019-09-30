@@ -30,9 +30,6 @@ class Particle {
     }
 
     show() {
-        //stroke(0, 5)
-        // strokeWeight(1)
-        // strokeWeight(1)
         this.color = lerpColor(this.color, this.tempColor, 0.008)
         fill(this.color)
         noStroke()
