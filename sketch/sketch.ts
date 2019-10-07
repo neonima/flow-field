@@ -9,15 +9,27 @@ let zoffStep = 0.0001;
 let particles: Particle[] = [];
 let flowField: p5.Vector[];
 let particleSize = 50;
+let c: p5.Color;
+let tempColor: p5.Color;
+let upColor: p5.Color;
+let downColor: p5.Color;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight, P2D);
-  background(0);
+  background(20);
   colorMode(RGB, 255);
   cols = floor(innerWidth / scl);
   rows = floor(innerHeight / scl);
+  c = color(random(150, 225), random(150, 225), random(150, 225), 25);
+  upColor = color(random(180, 225), random(150, 225), random(100, 255), 25);
+  downColor = color(random(150, 225), random(180, 225), random(100, 255), 25);
   for (let i = 0; i < particleSize; i++) {
     particles[i] = new Particle();
+    particles[i].c = c;
+    particles[i].color = c;
+    particles[i].tempColor = tempColor;
+    particles[i].upColor = upColor;
+    particles[i].downColor = downColor;
   }
   flowField = new Array<p5.Vector>(cols * rows);
 }

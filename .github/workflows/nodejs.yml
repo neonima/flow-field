@@ -16,5 +16,5 @@ jobs:
           BASE_BRANCH: master # The branch the action should deploy from.
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: "public" # The folder the action should deploy.
-          BUILD_SCRIPT: npm install && npm run build && mkdir public && cp -r build public && cp index.html public
+          BUILD_SCRIPT: npm install && npm run compile && mkdir public && cp -r build public && cp index.html public
           CI: true

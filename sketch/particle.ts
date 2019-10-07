@@ -4,7 +4,10 @@ class Particle {
   acc: p5.Vector;
   maxSpeed: number;
   color: p5.Color;
+  c: p5.Color;
   tempColor: p5.Color;
+  upColor: p5.Color;
+  downColor: p5.Color;
 
   constructor() {
     this.pos = createVector(random(width), random(height));
@@ -13,6 +16,10 @@ class Particle {
     this.maxSpeed = 0.6;
     this.color = color(0, 0, 0);
     this.tempColor = color(0, 0, 0);
+    this.upColor = color(0, 0, 0);
+    this.downColor = color(0, 0, 0);
+    this.c = color(0, 0, 0);
+
   }
 
   update() {
@@ -24,19 +31,20 @@ class Particle {
 
   applyForce(force: p5.Vector) {
     this.acc.add(force);
-    this.tempColor = color(0, 255, 0);
+    this.tempColor = this.c;
+
     if (force == null) return;
     this.tempColor =
       force.copy().heading() > 0
-        ? color(240, 3, 252, 125)
-        : color(3, 252, 227, 125);
+        ? this.upColor
+        : this.downColor;
   }
 
   show() {
-    this.color = lerpColor(this.color, this.tempColor, 0.008);
+    this.color = lerpColor(this.color, this.tempColor, 0.06);
     fill(this.color);
     noStroke();
-    circle(this.pos.x, this.pos.y, 0.5);
+    circle(this.pos.x, this.pos.y, 1);
   }
 
   edges() {
